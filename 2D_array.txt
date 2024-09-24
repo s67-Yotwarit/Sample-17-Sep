@@ -1,1 +1,99 @@
+int cols = 4; // จำนวนคอลัมน์
+int rows = 4; // จำนวนแถว
+int cardSize; // ขนาดของการ์ด
+Card[] cards = new Card[cols * rows]; // อาร์เรย์การ์ด
+boolean[] revealed; // สถานะการ์ดที่ถูกเปิด
+int firstCardIndex = -1; // การ์ดแรกที่ถูกเปิด
+int secondCardIndex = -1; // การ์ดที่สองที่ถูกเปิด
+boolean waiting = false; // ใช้เพื่อควบคุมการเปิดการ์ด
 
+void setup() {
+  size(400, 400);
+  cardSize = width / cols;
+  initializeCards();
+  revealed = new boolean[cards.length];
+}
+
+void draw() {
+  background(255);
+  for (int i = 0; i < cards.length; i++) {
+    cards[i].show(revealed[i]);
+  }
+}
+
+void mousePressed() {
+  int index = mouseX / cardSize + (mouseY / cardSize) * cols;
+  if (index >= 0 && index < cards.length && !revealed[index] && !waiting) {
+    if (firstCardIndex == -1) {
+      firstCardIndex = index;
+      revealed[firstCardIndex] = true;
+    } else if (secondCardIndex == -1) {
+      secondCardIndex = index;
+      revealed[secondCardIndex] = true;
+      waiting = true;
+      checkForMatch();
+    }
+  }
+}
+
+void checkForMatch() {
+  if (cards[firstCardIndex].value == cards[secondCardIndex].value) {
+    firstCardIndex = -1;
+    secondCardIndex = -1;
+    waiting = false;
+  } else {
+    delay(1000); // รอ 1 วินาที
+    revealed[firstCardIndex] = false;
+    revealed[secondCardIndex] = false;
+    firstCardIndex = -1;
+    secondCardIndex = -1;
+    waiting = false;
+  }
+}
+
+void initializeCards() {
+  int[] values = new int[cards.length];
+  for (int i = 0; i < values.length; i++) {
+    values[i] = i / 2; // คู่การ์ด
+  }
+  shuffleArray(values);
+  
+  for (int i = 0; i < cards.length; i++) {
+    cards[i] = new Card(values[i], i % cols * cardSize, i / cols * cardSize, cardSize);
+  }
+}
+
+void shuffleArray(int[] arr) {
+  for (int i = arr.length - 1; i > 0; i--) {
+    int j = int(random(i + 1));
+    int temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+}
+
+class Card {
+  int value;
+  float x, y;
+  float size;
+
+  Card(int value, float x, float y, float size) {
+    this.value = value;
+    this.x = x;
+    this.y = y;
+    this.size = size;
+  }
+
+  void show(boolean isRevealed) {
+    if (isRevealed) {
+      fill(200);
+      rect(x, y, size, size);
+      fill(0);
+      textAlign(CENTER, CENTER);
+      text(value, x + size / 2, y + size / 2);
+    } else {
+      fill(100);
+      rect(x, y, size, size);
+    }
+  }
+}
