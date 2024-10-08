@@ -3,6 +3,14 @@ boolean[][] revealed;
 boolean[][] matched;  // สำหรับเก็บสถานะที่จับคู่สำเร็จแล้ว
 int rows = 3;
 int cols = 4;
+int w, h;
+
+int[] firstClick = {-1, -1}; // เก็บการคลิกแรก
+int[] secondClick = {-1, -1}; // เก็บการคลิกที่สอง
+boolean isChecking = false;
+int revealTime = 1000; // เวลาที่จะโชว์ตัวเลข (1 วินาที)
+int lastClickTime = 0;
+
 
 void setup() {
     size(500, 500);
