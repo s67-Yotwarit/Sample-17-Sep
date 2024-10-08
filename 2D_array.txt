@@ -104,3 +104,20 @@ void checkMatch() {
     secondClick[1] = -1;
     isChecking = false;
 }
+void draw_number(int x, int y, int n) {
+    fill(0); 
+    text(n, x, y); 
+}
+
+void draw_grid(int rows, int cols, int w, int h) {
+    stroke(0);
+    strokeWeight(2);
+
+    for (int i = 1; i < cols; i++) {
+        line(i * w, 0, i * w, height);
+    }
+
+    for (int i = 1; i < rows; i++) {
+        line(0, i * h, width, i * h);
+    }
+}
