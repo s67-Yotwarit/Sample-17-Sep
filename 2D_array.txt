@@ -1,1 +1,6 @@
+int[][] grid;
+boolean[][] revealed;
+boolean[][] matched;  // สำหรับเก็บสถานะที่จับคู่สำเร็จแล้ว
+int rows = 3;
+int cols = 4;
 
