@@ -4,3 +4,32 @@ boolean[][] matched;  // สำหรับเก็บสถานะที่�
 int rows = 3;
 int cols = 4;
 
+void setup() {
+    size(500, 500);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    background(255);
+    
+    grid = generateGrid(rows, cols);
+    revealed = new boolean[rows][cols];
+    matched = new boolean[rows][cols];
+
+    w = width / cols;
+    h = height / rows;
+
+    // แสดงตัวเลขทั้งหมดในขณะที่เริ่มต้น
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            revealed[i][j] = true; // เปิดโชว์ทุกตัว
+        }
+    }
+
+    draw_grid(rows, cols, w, h);
+    delay(revealTime); // แสดงตัวเลขในเวลาที่กำหนด
+    // ซ่อนตัวเลขหลังจากแสดงแล้ว
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            revealed[i][j] = false; // ปิดโชว์ทุกตัว
+        }
+    }
+}
