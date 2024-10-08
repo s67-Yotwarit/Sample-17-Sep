@@ -41,3 +41,13 @@ void setup() {
         }
     }
 }
+void draw() {
+    background(255);
+    draw_grid(rows, cols, w, h);
+    draw_numbers();
+
+    // ตรวจสอบว่าถึงเวลาทำการซ่อนหรือจับคู่หลังจากแสดงตัวเลขแล้วหรือยัง
+    if (isChecking && millis() - lastClickTime >= revealTime) {
+        checkMatch();
+    }
+}
