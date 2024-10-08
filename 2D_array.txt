@@ -84,3 +84,23 @@ void mousePressed() {
         lastClickTime = millis(); // จับเวลาหลังจากคลิกครั้งที่สอง
     }
 }
+void checkMatch() {
+    int i1 = firstClick[0], j1 = firstClick[1];
+    int i2 = secondClick[0], j2 = secondClick[1];
+
+    // ถ้าตัวเลขตรงกัน
+    if (grid[i1][j1] == grid[i2][j2]) {
+        matched[i1][j1] = true;
+        matched[i2][j2] = true;
+    } else {
+        revealed[i1][j1] = false;
+        revealed[i2][j2] = false;
+    }
+
+    // รีเซ็ตการคลิก
+    firstClick[0] = -1;
+    firstClick[1] = -1;
+    secondClick[0] = -1;
+    secondClick[1] = -1;
+    isChecking = false;
+}
