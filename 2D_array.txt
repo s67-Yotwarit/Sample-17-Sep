@@ -64,3 +64,23 @@ void draw_numbers() {
         }
     }
 }
+void mousePressed() {
+    int j = mouseX / w;
+    int i = mouseY / h;
+
+    if (i >= rows || j >= cols || matched[i][j] || revealed[i][j] || isChecking) return;  // ไม่อนุญาตให้คลิกตัวที่จับคู่แล้วหรือถูกเปิดอยู่ และไม่ให้คลิกระหว่างตรวจสอบ
+
+    if (firstClick[0] == -1) {
+        // คลิกครั้งแรก
+        firstClick[0] = i;
+        firstClick[1] = j;
+        revealed[i][j] = true;
+    } else if (secondClick[0] == -1 && (i != firstClick[0] || j != firstClick[1])) {
+        // คลิกครั้งที่สอง
+        secondClick[0] = i;
+        secondClick[1] = j;
+        revealed[i][j] = true;
+        isChecking = true;
+        lastClickTime = millis(); // จับเวลาหลังจากคลิกครั้งที่สอง
+    }
+}
